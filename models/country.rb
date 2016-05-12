@@ -13,11 +13,13 @@ class Country
     sql = "INSERT INTO countries ( name ) 
           VALUES ( '#{ @name }' ) 
           RETURNING *;"
+    
     return Country.map_item( sql )
   end
 
   def self.all()
     sql = "SELECT * FROM countries;"
+    
     return Country.map_items( sql )
   end
 
@@ -26,9 +28,13 @@ class Country
     SqlRunner.run( sql )
   end
 
+  def spies()
+    sql = "SELECT s.* FROM spies c 
+          INNER JOIN operations o ON o.spy_id = s.id
+          WHERE country_id = #{ @id };"
 
-
-
+    return Spy.map_items( sql )
+  end
 
   def self.map_items( sql )
     countries = SqlRunner.run( sql )
