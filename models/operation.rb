@@ -1,4 +1,6 @@
-class Operations
+class Operation
+
+  attr_accessor :id, :country_id, :spy_id
 
   def initialize( params )
     @id = params[ 'id' ].to_i
@@ -28,15 +30,17 @@ class Operations
     SqlRunner.run( sql )
   end
 
-  def self.maps_items( sql )
+  def self.map_items( sql )
     operations = SqlRunner.run( sql )
     result = operations.map { |operation| 
-      Operation.new( operations ) }
+      Operation.new( operation ) }
+    
     return result
   end
 
   def self.map_item( sql )
     result = Operation.map_items( sql )
+    
     return result.first
   end
 

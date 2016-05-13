@@ -6,11 +6,11 @@ class Spy
 
   def initialize( params )
     @id = params[ 'id' ].to_i
-    @name = params[ 'name' ].to_i
+    @name = params[ 'name' ]
   end
 
   def save()
-    sql = "INSERT INTO spies (name)
+    sql = "INSERT INTO spies ( name )
           VALUES ( '#{ @name }' )
           RETURNING *;"
     

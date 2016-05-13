@@ -2,11 +2,11 @@ require_relative( '../db/sql_runner' )
 
 class Country
 
-  attr_reader :id, :name
+  attr_reader :id, :name 
 
   def initialize( params )
     @id = params[ 'id' ].to_i
-    @name = name[ 'name' ]
+    @name = params[ 'name' ]
   end
 
   def save()
@@ -23,13 +23,13 @@ class Country
     return Country.map_items( sql )
   end
 
-  def self.delete_all
+  def self.delete_all()
     sql = "DELETE FROM countries;"
     SqlRunner.run( sql )
   end
 
   def spies()
-    sql = "SELECT s.* FROM spies c 
+    sql = "SELECT s.* FROM spies s 
           INNER JOIN operations o ON o.spy_id = s.id
           WHERE country_id = #{ @id };"
 
@@ -39,6 +39,7 @@ class Country
   def self.map_items( sql )
     countries = SqlRunner.run( sql )
     result = countries.map { |country| Country.new( country ) }
+    
     return result
   end
 
